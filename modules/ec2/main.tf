@@ -21,7 +21,7 @@ resource "aws_key_pair" "web" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = var.size
   key_name      = aws_key_pair.web.key_name
 
   vpc_security_group_ids = [aws_security_group.allow_8080.id]
@@ -29,4 +29,22 @@ resource "aws_instance" "web" {
                 #!/bin/bash
                 echo "I made a terraform module" > index.html
                 EOF
+
+  provisioner "file" {
+    source      = "${path.module}/airflow/install.sh"
+    destination = "/tmp/install.sh"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+      host        = self.public_dns
+    }
+  }
+
+  tags = {
+    Name        = "airflow"
+    Provisioner = "terraform"
+  }
+
 }
