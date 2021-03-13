@@ -30,7 +30,8 @@
     - name: Start airflow webserver on port 80 in background
       command: airflow webserver -D --port 80
       ignore_errors: True
-      when: 'webserver is already running'
+      register: command_result
+      failed_when: "'webserver is already running' in command_result.stderr"
   # - name: install Jenkins
   #   yum:
   #     name: jenkins
