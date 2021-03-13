@@ -18,7 +18,7 @@ cd this_repo
 ansible-playbook -C ./ansible_templates/install-airflow.yml
 ```
 
-## Deploy Environment
+## Deploy Infra + Run ansible-playbook
 
 ```bash
 ./start.sh

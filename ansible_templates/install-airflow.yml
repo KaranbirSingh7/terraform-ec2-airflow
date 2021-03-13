@@ -18,21 +18,19 @@
         name: apache-airflow
         version: '{{ airflow_version }}'
 
-  # - name: clone preconfigured Jenkins file
-  #   git:
-  #     repo: https://github.com/linuxacademy/content-terraform-jenkins.git
-  #     dest: /tmp/jenkins
+    - name: Initialize airflow database (airflow db init)
+      command: 'airflow db init'
 
-  # - name: Setup Jenkins Repo
-  #   get_url:
-  #     url: https://pkg.jenkins.io/redhat/jenkins.repo
-  #     dest: /etc/yum.repos.d/jenkins.repo
+    - name: Create admin user for airflow login
+      command: 'airflow users create --username admin --password admin --firstname Peter  --lastname Parker --role Admin --email spiderman@superhero.org'
 
-  # - name: Import Jenkins Repo GPG key
-  #   rpm_key:
-  #     state: present
-  #     key: https://pkg.jenkins.io/redhat/jenkins.io.key
+    - name: Start airflow scheduler in background
+      command: airflow scheduler -D
 
+    - name: Start airflow webserver on port 80 in background
+      command: airflow webserver -D --port 80
+      ignore_errors: True
+      when: 'webserver is already running'
   # - name: install Jenkins
   #   yum:
   #     name: jenkins
