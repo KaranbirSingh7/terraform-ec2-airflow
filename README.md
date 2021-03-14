@@ -10,7 +10,7 @@ Resources provisioned in AWS:
 - 1 EC2 VM (size can be changed, default to t2.micro)
 - 1 key pair
 
-Once Infrstructure is provisioned, ansible uses AWS dynamic inventory and run playbook to have airflow installed on OS (Debian/Ubuntu).
+Once Infrastructure is provisioned, ansible uses AWS dynamic inventory and run playbook to have airflow installed on OS (Debian/Ubuntu).
 
 ### Check which EC2 instances the ansible-playbook would run on
 
