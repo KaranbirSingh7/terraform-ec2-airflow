@@ -1,6 +1,16 @@
 # terraform-ec2-airflow
 
-Requires terraform and ansible to run
+### Description
+
+A simple terraform + ansible setup to provision infra and run airflow in seconds.
+
+Resources provisioned in AWS:
+
+- 1 security group
+- 1 EC2 VM (size can be changed, default to t2.micro)
+- 1 key pair
+
+Once Infrstructure is provisioned, ansible uses AWS dynamic inventory and run playbook to have airflow installed on OS (Debian/Ubuntu).
 
 ### Check which EC2 instances the ansible-playbook would run on
 
